@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => ['auth.redirect']], function () {
-    Route::get('/login', 'LoginController@loginForm');
+    Route::get('/login', 'LoginController@loginForm')->name('login');
     Route::post('/login', 'LoginController@loginProcess');
 });
 Route::get('/logout', 'LoginController@logout');
