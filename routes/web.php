@@ -16,37 +16,80 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => ['auth.redirect']], function () {
     Route::get('/login', 'LoginController@loginForm')->name('login');
     Route::post('/login', 'LoginController@loginProcess');
+    Route::get('/register', 'RegisterController@registerForm');
+    Route::post('/register', 'RegisterController@registerProcess');
 });
 Route::get('/logout', 'LoginController@logout');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'admin', 'middleware' => ['role:admin']], function () {
-        Route::get('/', 'Admin\HomeController@index');
+        Route::get('/', 'HomeController@index');
         Route::group(['prefix' => 'user'], function () {
-            Route::get('/', 'Admin\UserController@index');
-            Route::get('/add', 'Admin\UserController@create');
-            Route::post('/add', 'Admin\UserController@store');
+            Route::get('/', 'UserController@index');
+            Route::get('/add', 'UserController@create');
+            Route::post('/add', 'UserController@store');
             Route::group(['prefix' => '{user_id}'], function () {
-                Route::get('/', 'Admin\UserController@show');
-                Route::get('/edit', 'Admin\UserController@edit');
-                Route::put('/edit', 'Admin\UserController@update');
-                Route::delete('/', 'Admin\UserController@destroy');
+                Route::get('/', 'UserController@show');
+                Route::get('/edit', 'UserController@edit');
+                Route::put('/edit', 'UserController@update');
+                Route::delete('/', 'UserController@destroy');
             });
         });
 
         Route::group(['prefix' => 'role'], function () {
-            Route::get('/', 'Admin\RoleController@index');
-            Route::get('/add', 'Admin\RoleController@create');
-            Route::post('/add', 'Admin\RoleController@store');
+            Route::get('/', 'RoleController@index');
+            Route::get('/add', 'RoleController@create');
+            Route::post('/add', 'RoleController@store');
             Route::group(['prefix' => '{role_id}'], function () {
-                Route::get('/', 'Admin\RoleController@show');
-                Route::get('/edit', 'Admin\RoleController@edit');
-                Route::put('/edit', 'Admin\RoleController@update');
-                Route::delete('/', 'Admin\RoleController@destroy');
+                Route::get('/', 'RoleController@show');
+                Route::get('/edit', 'RoleController@edit');
+                Route::put('/edit', 'RoleController@update');
+                Route::delete('/', 'RoleController@destroy');
+            });
+        });
+
+        Route::group(['prefix' => 'job'], function () {
+            Route::get('/', 'JobController@index');
+            Route::delete('/', 'JobController@multi_destroy');
+            Route::get('/add', 'JobController@create');
+            Route::post('/add', 'JobController@store');
+            Route::group(['prefix' => '{job_id}'], function () {
+                Route::get('/', 'JobController@show');
+                Route::get('/edit', 'JobController@edit');
+                Route::put('/edit', 'JobController@update');
+                Route::delete('/', 'JobController@destroy');
+            });
+        });
+
+        Route::group(['prefix' => 'company'], function () {
+            Route::get('/', 'CompanyController@index');
+            Route::delete('/', 'CompanyController@multi_destroy');
+            Route::get('/add', 'CompanyController@create');
+            Route::post('/add', 'CompanyController@store');
+            Route::group(['prefix' => '{company_id}'], function () {
+                Route::get('/', 'CompanyController@show');
+                Route::get('/edit', 'CompanyController@edit');
+                Route::put('/edit', 'CompanyController@update');
+                Route::delete('/', 'CompanyController@destroy');
             });
         });
     });
     Route::group(['prefix' => '', 'middleware' => ['role:user']], function () {
-        Route::get('/', 'User\HomeController@index');
+        Route::get('/', 'HomeController@index');
+
+
+        Route::group(['prefix' => 'job'], function () {
+            Route::get('/', 'JobController@index');
+            Route::group(['prefix' => '{job_id}'], function () {
+                Route::get('/', 'JobController@show');
+            });
+        });
+
+        Route::group(['prefix' => 'company'], function () {
+            Route::get('/', 'CompanyController@index');
+            Route::group(['prefix' => '{company_id}'], function () {
+                Route::get('/', 'CompanyController@show');
+            });
+        });
     });
 });

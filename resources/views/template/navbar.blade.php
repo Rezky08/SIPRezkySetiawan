@@ -2,7 +2,7 @@
     <nav class="navbar has-background-info-light">
         <div class="navbar-brand">
             <a class="navbar-item" href="{{ url('') }}">
-                <span class="has-text-weight-bold">User Management</span>
+                <span class="has-text-weight-bold">{{ env('APP_NAME') }}</span>
             </a>
 
             <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">

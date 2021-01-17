@@ -1,0 +1,37 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class AddJobTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('jobs', function (Blueprint $table) {
+            $table->id();
+            $table->bigInteger('user_id');
+            $table->bigInteger('company_id');
+            $table->string('name', 100);
+            $table->string('location', 255);
+            $table->text('description')->nullable();
+            $table->decimal('salary', 19, 2)->nullable();
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('jobs');
+    }
+}

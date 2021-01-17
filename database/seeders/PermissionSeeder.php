@@ -16,20 +16,21 @@ class PermissionSeeder extends Seeder
      */
     public function run()
     {
-        $data = [
-            [
-                'permission_name' => 'create'
-            ],
-            [
-                'permission_name' => 'read'
-            ],
-            [
-                'permission_name' => 'update'
-            ],
-            [
-                'permission_name' => 'delete'
-            ]
+        $permissions = [
+            'create', 'read', 'update', 'delete'
         ];
+
+        $permission_data = [
+            'job', 'company'
+        ];
+
+        $data = [];
+        foreach ($permission_data as $p_data) {
+            foreach ($permissions as $permission) {
+                $data[]['permission_name'] = $p_data . '-' . $permission;
+            }
+        }
+
         foreach ($data as $item) {
             try {
                 (new Permission)->firstOrCreate($item);

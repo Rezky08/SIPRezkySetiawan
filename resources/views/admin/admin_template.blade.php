@@ -20,6 +20,19 @@ $menus = [
             ]
         ]
     ],
+    [
+        'menu_name' => 'Job',
+        'menu_items' => [
+            [
+                'item_name' => 'Job List',
+                'item_link' => url('admin/job')
+            ],
+            [
+                'item_name' => 'Company List',
+                'item_link' => url('admin/company')
+            ]
+        ]
+    ],
 
 ];
 @endphp

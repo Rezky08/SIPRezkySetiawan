@@ -11,7 +11,6 @@
 </head>
 
 <body>
-
     @stack('content')
 
     @stack('script')
